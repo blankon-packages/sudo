@@ -1,3 +1,128 @@
+sudo (1.8.17p1-2blankon1) tambora; urgency=medium
+
+  * New Upstream Release 
+
+ -- Rahman Yusri Aftian <aftian@blankon.id>  Fri, 26 Aug 2016 22:15:12 +0700
+
+sudo (1.8.17p1-2) unstable; urgency=medium
+
+  * merge 1.8.15-1.1 NMU changes 
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 05 Jul 2016 16:01:55 +0200
+
+sudo (1.8.17p1-1) unstable; urgency=low
+
+  * new upstream version, closes: #805563
+  * build-depend on the new mandoc package so we can rebuild man pages 
+    properly if needed, closes: #809984
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 05 Jul 2016 16:01:55 +0200
+
+sudo (1.8.15-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload
+  * Disable editing of files via user-controllable symlinks
+    (Closes: #804149) (CVE-2015-5602)
+    - Fix directory writability checks for sudoedit
+    - Enable sudoedit directory writability checks by default
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Mon, 04 Jan 2016 23:36:50 +0000
+
+sudo (1.8.15-1) unstable; urgency=low
+
+  * new upstream version, closes: #804149
+  * use --with-exampledir to deliver example files more cleanly
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 23 Dec 2015 11:15:22 -0700
+
+sudo (1.8.12-1) unstable; urgency=low
+
+  * new upstream version, closes: #772707, #773383
+  * patch from Christian Kastner to fix sudoers handling error when moving
+    between sudo and sudo-ldap packages, closes: #776137
+
+ -- Bdale Garbee <bdale@gag.com>  Mon, 23 Feb 2015 08:56:06 -0700
+
+sudo (1.8.11p2-1) unstable; urgency=low
+
+  * new upstream version
+
+ -- Bdale Garbee <bdale@gag.com>  Thu, 30 Oct 2014 11:14:06 -0700
+
+sudo (1.8.11p1-2) unstable; urgency=low
+
+  * patch from Jakub Wilk to fix 'ignoring time stamp from the future'
+    messages, closes: #762465
+  * upstream patch forwarded by Laurent Bigonville that fixes problem with
+    Linux kernel auditing code, closes: #764817
+
+ -- Bdale Garbee <bdale@gag.com>  Mon, 20 Oct 2014 11:06:44 -0600
+
+sudo (1.8.11p1-1) unstable; urgency=low
+
+  * new upstream version, closes: #764286
+  * fix typo in German translation, closes: #761601
+
+ -- Bdale Garbee <bdale@gag.com>  Fri, 10 Oct 2014 10:16:08 -0600
+
+sudo (1.8.10p3-1) unstable; urgency=low
+
+  * new upstream release
+  * add hardening=+all to match login and su
+  * updated VCS URLs and crypto verified watch file, closes: #747473
+  * harmonize configure options for LDAP version to match non-LDAP version,
+    in particular stop using --with-secure-path and add configure_args
+  * enable audit support on Linux systems, closes: #745779
+  * follow upstream change from --with-timedir to --with-rundir
+
+ -- Bdale Garbee <bdale@gag.com>  Sun, 14 Sep 2014 10:20:15 -0600
+
+sudo (1.8.9p5-1) unstable; urgency=low
+
+  * new upstream release, closes: #735328
+
+ -- Bdale Garbee <bdale@gag.com>  Tue, 04 Feb 2014 11:46:19 -0700
+
+sudo (1.8.9p4-1) unstable; urgency=low
+
+  * new upstream release, closes: #732008
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 15 Jan 2014 14:55:25 -0700
+
+sudo (1.8.9p3-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Bdale Garbee <bdale@gag.com>  Mon, 13 Jan 2014 14:49:42 -0700
+
+sudo (1.8.9~rc1-1) experimental; urgency=low
+
+  * upstream release candidate
+
+ -- Bdale Garbee <bdale@gag.com>  Sun, 29 Dec 2013 21:36:12 -0700
+
+sudo (1.8.9~b2-1) experimental; urgency=low
+
+  * upstream beta release
+  * update Debian standards version
+  * squelch lintian complaint about missing sudo-ldap systemd service, since 
+    the service file is always called 'sudo.service'
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 25 Dec 2013 14:48:23 -0700
+
+sudo (1.8.9~b1-1) experimental; urgency=low
+
+  * upstream beta release
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 27 Nov 2013 09:37:00 -0700
+
+sudo (1.8.8-3) unstable; urgency=low
+
+  * document in README.Debian that the sssd support is enabled in the sudo
+    package, not in the sudo-ldap package, closes: #728289
+
+ -- Bdale Garbee <bdale@gag.com>  Wed, 30 Oct 2013 10:33:44 -0600
+
 sudo (1.8.8-2blankon2) suroboyo; urgency=low
 
   * Change name blankon

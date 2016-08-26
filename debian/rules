@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
 export DH_VERBOSE=1
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 
 CFLAGS = `dpkg-buildflags --get CFLAGS`
 CFLAGS += -Wall -Wno-comment
@@ -10,7 +11,7 @@ CPPFLAGS = `dpkg-buildflags --get CPPFLAGS`
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 DEB_HOST_ARCH_OS ?= $(shell dpkg-architecture -qDEB_HOST_ARCH_OS)
 ifeq ($(DEB_HOST_ARCH_OS),linux)
-  configure_args += --with-selinux
+  configure_args += --with-selinux --with-linux-audit
 endif
 
 reconf-stamp:
@@ -37,12 +38,13 @@ configure-stamp: reconf-stamp
 		--with-logfac=authpriv \
 		--with-env-editor \
 		--with-editor=/usr/bin/editor \
+		--with-exampledir=/usr/share/doc/sudo/examples \
 		--with-timeout=15 \
 		--with-password-timeout=0 \
 		--with-passprompt="[sudo] password for %p: " \
 		--disable-root-mailer \
 		--with-sendmail=/usr/sbin/sendmail \
-		--with-timedir=/var/lib/sudo \
+		--with-rundir=/var/lib/sudo \
 		--mandir=/usr/share/man \
 		--libexecdir=/usr/lib/sudo \
 		--with-sssd --with-sssd-lib=/usr/lib/$(DEB_HOST_MULTIARCH) \
@@ -61,16 +63,18 @@ configure-stamp: reconf-stamp
 		--with-logfac=authpriv \
 		--with-env-editor \
 		--with-editor=/usr/bin/editor \
+		--with-exampledir=/usr/share/doc/sudo-ldap/examples \
 		--with-timeout=15 \
 		--with-password-timeout=0 \
 		--with-passprompt="[sudo] password for %p: " \
 		--disable-root-mailer \
 		--disable-setresuid \
 		--with-sendmail=/usr/sbin/sendmail \
+		--with-rundir=/var/lib/sudo \
 		--with-ldap-conf-file=/etc/sudo-ldap.conf \
 		--mandir=/usr/share/man \
 		--libexecdir=/usr/lib/sudo \
-		--with-secure-path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/X11R6/bin"
+		$(configure_args)
 
 	touch configure-stamp
 
@@ -79,9 +83,6 @@ build-arch: build-stamp
 build-indep: build-stamp
 build-stamp: configure-stamp
 	dh_testdir
-
-	# ensure our pod changes get picked up
-	$(MAKE) -C doc sudoers.man.in sudo.man.in visudo.man.in
 
 	$(MAKE) -C build-simple
 	$(MAKE) -C build-ldap
@@ -116,12 +117,6 @@ install: build-stamp
 	mv	debian/sudo-ldap/usr/share/doc/sudo/* \
 		debian/sudo-ldap/usr/share/doc/sudo-ldap/
 	rmdir	debian/sudo-ldap/usr/share/doc/sudo
-
-	# move sample files to the examples folder
-	mv	debian/sudo/usr/share/doc/sudo/sample.* \
-		debian/sudo/usr/share/doc/sudo/examples/
-	mv	debian/sudo-ldap/usr/share/doc/sudo-ldap/sample.* \
-		debian/sudo-ldap/usr/share/doc/sudo-ldap/examples/
 
 	# and install things we do want that make install doesn't know about
 	install -o root -g root -m 0644 debian/sudo.pam \
@@ -160,6 +155,8 @@ binary-arch: build install
 	dh_installman -A
 	dh_installinfo -A
 	dh_installchangelogs ChangeLog 
+	# clear dependency_libs field in .la files
+	sed -i "/dependency_libs/ s/'.*'/''/" `find . -name '*.la'`
 	dh_strip
 	dh_compress
 	dh_fixperms
