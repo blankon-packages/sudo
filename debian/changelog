@@ -1,4 +1,4 @@
-sudo (1.8.20p1-1blankon1) tambora; urgency=medium
+sudo (1.8.20p1-1blankon1) tambora-security; urgency=high
 
   * Fix CVE-2017-1000367
 
