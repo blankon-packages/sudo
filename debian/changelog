@@ -1,3 +1,9 @@
+sudo (1.8.20p1-1blankon1) tambora-security; urgency=high
+
+  * Fix CVE-2017-1000367
+
+ -- Yudha Harimantoro T <yht.dev@gmail.com>  Wed, 27 Sep 2017 01:05:43 +0700
+
 sudo (1.8.17p1-2blankon1) tambora; urgency=medium
 
   * New Upstream Release 
